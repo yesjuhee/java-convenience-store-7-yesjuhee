@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import store.constant.Path;
@@ -27,6 +28,15 @@ class PurchasesTest {
         assertThatThrownBy(() -> new Purchases(purchasesInput))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.INVALID_PURCHASE_FORMAT);
+    }
+
+    @Test
+    void 존재하지않는상품오류_테스트() {
+        String purchasesInput = "[제로콜라-2]";
+        assertThatThrownBy(() -> new Purchases(purchasesInput))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.PRODUCT_NOT_EXIST);
+
     }
 
     @ParameterizedTest

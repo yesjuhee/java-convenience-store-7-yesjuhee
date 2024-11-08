@@ -34,4 +34,8 @@ public class Products {
     public static List<Product> getProducts() {
         return products.values().stream().toList();
     }
+
+    public static boolean hasProduct(String productName) {
+        return products.containsKey(productName);
+    }
 }
