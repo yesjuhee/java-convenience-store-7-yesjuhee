@@ -30,7 +30,7 @@ public class Product {
         if (baseQuantity.getQuantity() + promotionQuantity.getQuantity() < purchaseAmount) {
             throw new IllegalArgumentException(ErrorMessage.OUT_OF_STOCK);
         }
-        if (!hasPromotion() || !promotion.inPeriod() && baseQuantity.getQuantity() < purchaseAmount) {
+        if ((!hasPromotion() || !promotion.inPeriod()) && baseQuantity.getQuantity() < purchaseAmount) {
             throw new IllegalArgumentException(ErrorMessage.OUT_OF_STOCK);
         }
     }
