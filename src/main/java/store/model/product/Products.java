@@ -6,12 +6,12 @@ import store.utils.FileUtils;
 
 public class Products {
     private static Products instance;
-    private HashMap<String, Product> products;
+    private static HashMap<String, Product> products;
 
     private Products() {
     }
 
-    public void fetchProductsData(final String filePath) {
+    public static void fetchProductsData(final String filePath) {
         products = new HashMap<>();
         List<ProductData> productsData = FileUtils.readCsvBody(filePath)
                 .stream().map(ProductData::new).toList();
@@ -21,7 +21,7 @@ public class Products {
         }
     }
 
-    private void updateProducts(final String key, final ProductData productData) {
+    private static void updateProducts(final String key, final ProductData productData) {
         if (products.containsKey(key)) {
             Product product = products.remove(key);
             product.updateQuantity(productData);
@@ -31,7 +31,11 @@ public class Products {
         products.put(key, new Product(productData));
     }
 
-    public List<Product> getProducts() {
+    public static Product getProductByName(String name) {
+        return products.get(name);
+    }
+
+    public static List<Product> getProducts() {
         return products.values().stream().toList();
     }
 

@@ -7,12 +7,12 @@ import store.utils.FileUtils;
 
 public class Promotions {
     private static Promotions instance;
-    private HashMap<String, Promotion> promotions;
+    private static HashMap<String, Promotion> promotions;
 
     private Promotions() {
     }
 
-    public void fetchPromotionsData(final String filePath) {
+    public static void fetchPromotionsData(final String filePath) {
         promotions = new HashMap<>();
         List<List<String>> promotionsData = FileUtils.readCsvBody(filePath);
         for (List<String> promotionData : promotionsData) {
@@ -22,7 +22,7 @@ public class Promotions {
         }
     }
 
-    public Promotion getPromotionByName(final String promotionName) {
+    public static Promotion getPromotionByName(final String promotionName) {
         return promotions.get(promotionName);
     }
 

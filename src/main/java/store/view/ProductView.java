@@ -12,6 +12,7 @@ public class ProductView {
         System.out.println("현재 보유하고 있는 상품입니다.\n");
 
         products.getProducts().forEach(this::displayProduct);
+        System.out.println();
     }
 
     private void displayProduct(final Product product) {
