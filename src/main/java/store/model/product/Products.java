@@ -5,11 +5,7 @@ import java.util.List;
 import store.utils.FileUtils;
 
 public class Products {
-    private static Products instance;
     private static HashMap<String, Product> products;
-
-    private Products() {
-    }
 
     public static void fetchProductsData(final String filePath) {
         products = new HashMap<>();
@@ -37,12 +33,5 @@ public class Products {
 
     public static List<Product> getProducts() {
         return products.values().stream().toList();
-    }
-
-    public static Products getInstance() {
-        if (instance == null) {
-            instance = new Products();
-        }
-        return instance;
     }
 }

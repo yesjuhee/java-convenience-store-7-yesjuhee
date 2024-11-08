@@ -6,11 +6,7 @@ import store.constants.PromotionsFile;
 import store.utils.FileUtils;
 
 public class Promotions {
-    private static Promotions instance;
     private static HashMap<String, Promotion> promotions;
-
-    private Promotions() {
-    }
 
     public static void fetchPromotionsData(final String filePath) {
         promotions = new HashMap<>();
@@ -24,12 +20,5 @@ public class Promotions {
 
     public static Promotion getPromotionByName(final String promotionName) {
         return promotions.get(promotionName);
-    }
-
-    public static Promotions getInstance() {
-        if (instance == null) {
-            instance = new Promotions();
-        }
-        return instance;
     }
 }

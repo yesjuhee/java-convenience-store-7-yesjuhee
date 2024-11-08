@@ -5,8 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
 class PromotionsTest {
-    Promotions promotions = Promotions.getInstance();
-
     @Test
     void Promotions_생성테스트() {
         // given
@@ -14,8 +12,8 @@ class PromotionsTest {
         String firstPromotionName = "promotion1";
 
         // when
-        promotions.fetchPromotionsData(filePath);
-        Promotion promotion1 = promotions.getPromotionByName(firstPromotionName);
+        Promotions.fetchPromotionsData(filePath);
+        Promotion promotion1 = Promotions.getPromotionByName(firstPromotionName);
 
         // then
         assertThat(promotion1.getName()).isEqualTo(firstPromotionName);

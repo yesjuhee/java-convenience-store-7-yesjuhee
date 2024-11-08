@@ -17,9 +17,8 @@ public class Product {
     }
 
     public void updateQuantity(final ProductData productData) {
-        Promotions promotions = Promotions.getInstance();
         if (productData.hasPromotion()) {
-            this.promotion = promotions.getPromotionByName(productData.getPromotion());
+            this.promotion = Promotions.getPromotionByName(productData.getPromotion());
             this.promotionQuantity = new Quantity(productData.getQuantify());
             return;
         }

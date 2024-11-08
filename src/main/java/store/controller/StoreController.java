@@ -12,17 +12,19 @@ public class StoreController {
     private Purchases purchases;
 
     public void run() {
+        fetchFileData();
         displayProducts();
         purchaseProducts();
     }
 
+    private void fetchFileData() {
+        Promotions.fetchPromotionsData(PromotionsFile.FILE_PATH);
+        Products.fetchProductsData(ProductsFile.FILE_PATH);
+    }
+
     private void displayProducts() {
-        Promotions promotions = Promotions.getInstance();
-        Products products = Products.getInstance();
         ProductView productView = new ProductView();
-        promotions.fetchPromotionsData(PromotionsFile.FILE_PATH);
-        products.fetchProductsData(ProductsFile.FILE_PATH);
-        productView.displayProducts(products);
+        productView.displayProducts(Products.getProducts());
     }
 
     private void purchaseProducts() {

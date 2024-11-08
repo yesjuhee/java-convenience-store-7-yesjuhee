@@ -1,17 +1,17 @@
 package store.view;
 
+import java.util.List;
 import store.model.product.Product;
-import store.model.product.Products;
 import store.model.promotion.Promotion;
 
 public class ProductView {
     private static final int OUT_OF_STOCK = 0;
 
-    public void displayProducts(final Products products) {
+    public void displayProducts(final List<Product> products) {
         System.out.println("안녕하세요. W편의점입니다.");
         System.out.println("현재 보유하고 있는 상품입니다.\n");
 
-        products.getProducts().forEach(this::displayProduct);
+        products.forEach(this::displayProduct);
         System.out.println();
     }
 

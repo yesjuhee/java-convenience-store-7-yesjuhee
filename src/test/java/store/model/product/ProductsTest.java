@@ -7,12 +7,9 @@ import org.junit.jupiter.api.Test;
 import store.model.promotion.Promotions;
 
 class ProductsTest {
-    Promotions promotions = Promotions.getInstance();
-    Products products = Products.getInstance();
-
     @BeforeEach
     void setPromotions() {
-        promotions.fetchPromotionsData("src/test/resources/promotions.md");
+        Promotions.fetchPromotionsData("src/test/resources/promotions.md");
     }
 
     @Test
@@ -21,10 +18,10 @@ class ProductsTest {
         String filePath = "src/test/resources/products-base-only.md";
 
         // when
-        products.fetchProductsData(filePath);
+        Products.fetchProductsData(filePath);
 
         // then
-        Product baseOnlyProduct = products.getProducts().getFirst();
+        Product baseOnlyProduct = Products.getProducts().getFirst();
         assertThat(baseOnlyProduct.getName()).isEqualTo("콜라");
         assertThat(baseOnlyProduct.getPrice()).isEqualTo(1000);
         assertThat(baseOnlyProduct.getBaseQuantity()).isEqualTo(10);
@@ -37,10 +34,10 @@ class ProductsTest {
         String filePath = "src/test/resources/products-promotion-only.md";
 
         // when
-        products.fetchProductsData(filePath);
+        Products.fetchProductsData(filePath);
 
         // then
-        Product promotionOnlyProduct = products.getProducts().getFirst();
+        Product promotionOnlyProduct = Products.getProducts().getFirst();
         assertThat(promotionOnlyProduct.getName()).isEqualTo("콜라");
         assertThat(promotionOnlyProduct.getPrice()).isEqualTo(1000);
         assertThat(promotionOnlyProduct.getBaseQuantity()).isEqualTo(0);
@@ -54,10 +51,10 @@ class ProductsTest {
         String filePath = "src/test/resources/products-base-promotion.md";
 
         // when
-        products.fetchProductsData(filePath);
+        Products.fetchProductsData(filePath);
 
         // then
-        Product baseAndPromotionProduct = products.getProducts().getFirst();
+        Product baseAndPromotionProduct = Products.getProducts().getFirst();
         assertThat(baseAndPromotionProduct.getName()).isEqualTo("콜라");
         assertThat(baseAndPromotionProduct.getPrice()).isEqualTo(1000);
         assertThat(baseAndPromotionProduct.getBaseQuantity()).isEqualTo(10);
