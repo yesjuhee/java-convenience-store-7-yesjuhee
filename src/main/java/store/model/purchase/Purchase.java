@@ -6,12 +6,13 @@ import store.model.product.Products;
 
 public class Purchase {
     private final Product product;
-    private final int count;
+    private final int amount;
 
-    public Purchase(final String productName, final int count) {
+    public Purchase(final String productName, final int amount) {
         validateProductExist(productName);
         this.product = Products.getProductByName(productName);
-        this.count = count;
+        product.purchase(amount);
+        this.amount = amount;
     }
 
     private void validateProductExist(final String productName) {
@@ -19,4 +20,5 @@ public class Purchase {
             throw new IllegalArgumentException(ErrorMessage.PRODUCT_NOT_EXIST);
         }
     }
+
 }

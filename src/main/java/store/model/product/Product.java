@@ -1,5 +1,6 @@
 package store.model.product;
 
+import store.constants.ErrorMessage;
 import store.model.promotion.Promotion;
 import store.model.promotion.Promotions;
 
@@ -23,6 +24,16 @@ public class Product {
             return;
         }
         this.baseQuantity = new Quantity(productData.getQuantify());
+    }
+
+    public void purchase(int count) {
+        validatePurchaseCount(count);
+    }
+
+    private void validatePurchaseCount(int purchaseAmount) {
+        if (baseQuantity.getQuantity() + promotionQuantity.getQuantity() < purchaseAmount) {
+            throw new IllegalArgumentException(ErrorMessage.OUT_OF_STOCK);
+        }
     }
 
     public boolean hasPromotion() {

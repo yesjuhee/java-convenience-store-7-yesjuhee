@@ -29,9 +29,9 @@ public class Purchases {
     private Purchase parsePurchase(final String purchaseInput) {
         validatePurchaseFormat(purchaseInput);
         String productName = splitProductName(purchaseInput).strip();
-        String countInput = splitCountInput(purchaseInput).strip();
-        validatePositiveNumber(countInput);
-        return new Purchase(productName, Integer.parseInt(countInput));
+        String amountInput = splitAmountInput(purchaseInput).strip();
+        validatePositiveNumber(amountInput);
+        return new Purchase(productName, Integer.parseInt(amountInput));
     }
 
     private void validatePurchaseFormat(final String productInput) {
@@ -49,7 +49,7 @@ public class Purchases {
         return purchaseInput.substring(purchaseInput.indexOf(PREFIX) + 1, purchaseInput.indexOf(PRODUCT_DELIMITER));
     }
 
-    private String splitCountInput(final String purchaseInput) {
+    private String splitAmountInput(final String purchaseInput) {
         return purchaseInput.substring(purchaseInput.indexOf(PRODUCT_DELIMITER) + 1, purchaseInput.indexOf(SUFFIX));
     }
 

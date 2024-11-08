@@ -13,7 +13,7 @@ class ProductsTest {
     }
 
     @Test
-    void 일반재고만있는경우_테스트() {
+    void 일반재고만있는경우_생성테스트() {
         // given
         String filePath = "src/test/resources/products-base-only.md";
 
@@ -29,7 +29,7 @@ class ProductsTest {
     }
 
     @Test
-    void 프로모션재고만있는경우_테스트() {
+    void 프로모션재고만있는경우_생성테스트() {
         // given
         String filePath = "src/test/resources/products-promotion-only.md";
 
@@ -46,7 +46,7 @@ class ProductsTest {
     }
 
     @Test
-    void 일반재고_프로모션재고_둘다있는경우_테스트() {
+    void 일반재고_프로모션재고_둘다있는경우_생성테스트() {
         // given
         String filePath = "src/test/resources/products-base-promotion.md";
 
