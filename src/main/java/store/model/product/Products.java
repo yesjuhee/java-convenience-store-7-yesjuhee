@@ -2,20 +2,18 @@ package store.model.product;
 
 import java.util.HashMap;
 import java.util.List;
-import store.constants.ProductsFile;
 import store.utils.FileUtils;
 
 public class Products {
     private static Products instance;
-    private final HashMap<String, Product> products;
+    private HashMap<String, Product> products;
 
     private Products() {
-        this.products = new HashMap<>();
-        fetchProductsData();
     }
 
-    private void fetchProductsData() {
-        List<ProductData> productsData = FileUtils.readCsvBody(ProductsFile.FILE_PATH)
+    public void fetchProductsData(final String filePath) {
+        products = new HashMap<>();
+        List<ProductData> productsData = FileUtils.readCsvBody(filePath)
                 .stream().map(ProductData::new).toList();
         for (ProductData productData : productsData) {
             String productName = productData.getName();
