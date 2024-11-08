@@ -10,6 +10,7 @@ public class Purchases {
     private static final String SUFFIX = "]";
     private static final String PRODUCT_DELIMITER = "-";
     private static final String PURCHASE_DELIMITER = ",";
+    private static final String POSITIVE_INTEGER_REGEX = "\\d+";
 
     private final List<Purchase> purchases = new ArrayList<>();
 
@@ -27,8 +28,8 @@ public class Purchases {
 
     private Purchase parsePurchase(final String purchaseInput) {
         validatePurchaseFormat(purchaseInput);
-        String productName = splitProductName(purchaseInput);
-        String countInput = splitCountInput(purchaseInput);
+        String productName = splitProductName(purchaseInput).strip();
+        String countInput = splitCountInput(purchaseInput).strip();
         validatePositiveNumber(countInput);
         return new Purchase(productName, Integer.parseInt(countInput));
     }
@@ -36,6 +37,10 @@ public class Purchases {
     private void validatePurchaseFormat(final String productInput) {
         if (!productInput.startsWith(PREFIX) || !productInput.endsWith(SUFFIX) || !productInput.contains(
                 PRODUCT_DELIMITER)) {
+            throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_FORMAT);
+        }
+        int delimiterIndex = productInput.indexOf(PRODUCT_DELIMITER);
+        if (productInput.indexOf(PRODUCT_DELIMITER, delimiterIndex + 1) != -1) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_FORMAT);
         }
     }
@@ -49,7 +54,7 @@ public class Purchases {
     }
 
     private void validatePositiveNumber(final String countInput) {
-        if (!countInput.matches("\\d+") || countInput.equals("0")) {
+        if (!countInput.matches(POSITIVE_INTEGER_REGEX) || countInput.equals("0")) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_FORMAT);
         }
     }

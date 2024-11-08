@@ -3,12 +3,13 @@ package store.model.promotion;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
+import store.constant.Path;
 
 class PromotionsTest {
     @Test
     void Promotions_생성테스트() {
         // given
-        String filePath = "src/test/resources/promotions.md";
+        String filePath = Path.PATH_TO_RESOURCES + "promotions.md";
         String firstPromotionName = "promotion1";
 
         // when
