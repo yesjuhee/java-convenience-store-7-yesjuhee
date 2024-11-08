@@ -9,20 +9,24 @@ import store.view.ProductView;
 import store.view.PurchaseView;
 
 public class StoreController {
-    private final ProductView productView = new ProductView();
-    private final PurchaseView purchaseView = new PurchaseView();
-
-    private final Promotions promotions = Promotions.getInstance();
-    private final Products products = Products.getInstance();
     private Purchases purchases;
 
-    public void sale() {
+    public void run() {
+        displayProducts();
+        purchaseProducts();
+    }
+
+    private void displayProducts() {
+        Promotions promotions = Promotions.getInstance();
+        Products products = Products.getInstance();
+        ProductView productView = new ProductView();
         promotions.fetchPromotionsData(PromotionsFile.FILE_PATH);
         products.fetchProductsData(ProductsFile.FILE_PATH);
         productView.displayProducts(products);
     }
 
-    public void purchase() {
+    private void purchaseProducts() {
+        PurchaseView purchaseView = new PurchaseView();
         String purchaseInput = purchaseView.readPurchaseInfo();
         this.purchases = new Purchases(purchaseInput);
     }
