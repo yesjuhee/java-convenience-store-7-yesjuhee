@@ -19,6 +19,10 @@ public class Promotion {
         this.period = new Period(startDate, endDate);
     }
 
+    public boolean inPeriod() {
+        return period.isIn();
+    }
+
     public String getName() {
         return name;
     }

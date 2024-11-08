@@ -25,7 +25,7 @@ class ProductTest {
         product.updateQuantity(promotionProductData);
 
         // when & then
-        assertThatThrownBy(() -> product.purchase(21))
+        assertThatThrownBy(() -> product.validatePurchaseAmount(21))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage(ErrorMessage.OUT_OF_STOCK);
     }
@@ -39,6 +39,20 @@ class ProductTest {
         product.updateQuantity(promotionProductData);
 
         // when & then
-        assertThatNoException().isThrownBy(() -> product.purchase(20));
+        assertThatNoException().isThrownBy(() -> product.validatePurchaseAmount(20));
+    }
+
+    @Test
+    void 프로모션기간이아닐때_기본재고를초과한경우_예외가발생한다() {
+        // given
+        ProductData productData = new ProductData(List.of("콜라", "1000", "10", "null"));
+        ProductData promotionProductData = new ProductData(List.of("콜라", "1000", "100", "지난행사"));
+        Product product = new Product(productData);
+        product.updateQuantity(promotionProductData);
+
+        // when & then
+        assertThatThrownBy(() -> product.validatePurchaseAmount(11))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(ErrorMessage.OUT_OF_STOCK);
     }
 }

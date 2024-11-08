@@ -26,12 +26,11 @@ public class Product {
         this.baseQuantity = new Quantity(productData.getQuantify());
     }
 
-    public void purchase(int count) {
-        validatePurchaseCount(count);
-    }
-
-    private void validatePurchaseCount(int purchaseAmount) {
+    public void validatePurchaseAmount(final int purchaseAmount) {
         if (baseQuantity.getQuantity() + promotionQuantity.getQuantity() < purchaseAmount) {
+            throw new IllegalArgumentException(ErrorMessage.OUT_OF_STOCK);
+        }
+        if (!hasPromotion() || !promotion.inPeriod() && baseQuantity.getQuantity() < purchaseAmount) {
             throw new IllegalArgumentException(ErrorMessage.OUT_OF_STOCK);
         }
     }

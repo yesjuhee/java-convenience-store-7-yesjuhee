@@ -11,7 +11,7 @@ public class Purchase {
     public Purchase(final String productName, final int amount) {
         validateProductExist(productName);
         this.product = Products.getProductByName(productName);
-        product.purchase(amount);
+        product.validatePurchaseAmount(amount);
         this.amount = amount;
     }
 
@@ -20,5 +20,4 @@ public class Purchase {
             throw new IllegalArgumentException(ErrorMessage.PRODUCT_NOT_EXIST);
         }
     }
-
 }
