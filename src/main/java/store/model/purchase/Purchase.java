@@ -8,12 +8,26 @@ import store.model.promotion.Promotion;
 public class Purchase {
     private final Product product;
     private int amount;
+    private int amountWithPromotion = 0;
 
     public Purchase(final String productName, final int amount) {
         validateProductExist(productName);
         this.product = Products.getProductByName(productName);
         product.validatePurchaseAmount(amount);
         this.amount = amount;
+        initializeAmountWithPromotion();
+    }
+
+    private void initializeAmountWithPromotion() {
+        if (!product.isInPromotion()) {
+            return;
+        }
+        int promotionQuantity = product.getPromotionQuantity();
+        int promotionUnit = product.getPromotionUnit();
+        while (amountWithPromotion + promotionUnit < this.amount
+                && amountWithPromotion + promotionUnit < promotionQuantity) {
+            amountWithPromotion += promotionUnit;
+        }
     }
 
     private void validateProductExist(final String productName) {
@@ -40,8 +54,8 @@ public class Purchase {
         return amount > product.getPromotionQuantity();
     }
 
-    public int calculateNonPromotionAmount() {
-        return amount - product.getPromotionQuantity();
+    public int calculateAmountWithoutPromotion() {
+        return amount - amountWithPromotion;
     }
 
     public boolean purchaseAmountLessThanPromotionQuantity() {
@@ -49,14 +63,15 @@ public class Purchase {
     }
 
     public void excludeNonPromotedAmount() {
-        amount -= calculateNonPromotionAmount();
+        amount = amountWithPromotion;
     }
 
-    public void addAmountByOne() {
+    public void addOneFreeProduct() {
         amount += 1;
+        amountWithPromotion += 1;
     }
 
-    public boolean canGetMoreProduct() {
+    public boolean canGetMoreFreeProduct() {
         Promotion promotion = product.getPromotion();
         return promotion.canGetMoreFreeProduct(amount);
     }

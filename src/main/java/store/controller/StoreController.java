@@ -68,24 +68,24 @@ public class StoreController {
 //            purchase.purchaseWithPromotion();
             return;
         }
-        if (purchase.canGetMoreProduct() && purchase.purchaseAmountLessThanPromotionQuantity()) {
-            confirmGetMoreProduct(purchase);
+        if (purchase.canGetMoreFreeProduct() && purchase.purchaseAmountLessThanPromotionQuantity()) {
+            confirmGetMoreFreeProduct(purchase);
         }
 //        purchase.purchaseWithoutPromotion();
     }
 
     private void confirmPurchaseAll(Purchase purchase) {
         boolean purchaseAll = confirmView.confirmToPurchaseAll(purchase.getProductName(),
-                purchase.calculateNonPromotionAmount());
+                purchase.calculateAmountWithoutPromotion());
         if (!purchaseAll) {
             purchase.excludeNonPromotedAmount();
         }
     }
 
-    private void confirmGetMoreProduct(Purchase purchase) {
+    private void confirmGetMoreFreeProduct(Purchase purchase) {
         boolean getMoreProduct = confirmView.confirmToGetMoreProduct(purchase.getProductName());
         if (getMoreProduct) {
-            purchase.addAmountByOne();
+            purchase.addOneFreeProduct();
         }
     }
 

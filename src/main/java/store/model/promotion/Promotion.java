@@ -32,4 +32,8 @@ public class Promotion {
     public boolean canGetMoreFreeProduct(int purchaseAmount) {
         return (purchaseAmount % (buy + get)) == buy;
     }
+
+    public int getPromotionUnit() {
+        return buy + get;
+    }
 }
