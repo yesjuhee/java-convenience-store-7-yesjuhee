@@ -18,7 +18,7 @@ public class OutputMessage {
     public static final String RECEIPT_HEADER = "%n================W 편의점================%n";
     public static final String RECEIPT_PURCHASE_HEADER = String.format("%-18s%-8s%8s%n", "상품명", "수량", "금액");
     public static final String RECEIPT_PURCHASE_BODY = "%-18s%,-8d%,8d%n";
-    public static final String RECEIPT_PRESENT_HEADER = "=============증\t정===============%n";
+    public static final String RECEIPT_PRESENT_HEADER = "================증   정================%n";
     public static final String RECEIPT_PRESENT_BODY = "%-18s %,-18d%n";
     public static final String RECEIPT_LINE = "====================================%n"; // 36
 //    public static final String RECEIPT_TOTAL_PRICE = String.format("%-18s %,-8d %,8d%n", "총구매액");

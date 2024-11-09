@@ -14,4 +14,12 @@ public class Present {
     public int getTotalPresentPrice() {
         return product.getPrice() * amount;
     }
+
+    public String getProductName() {
+        return product.getName();
+    }
+
+    public int getAmount() {
+        return amount;
+    }
 }

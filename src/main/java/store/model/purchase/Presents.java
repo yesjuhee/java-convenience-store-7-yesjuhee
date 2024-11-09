@@ -13,4 +13,8 @@ public class Presents {
     public int calculatePromotionDiscount() {
         return presents.stream().mapToInt((present) -> present.getTotalPresentPrice()).sum();
     }
+
+    public List<Present> getPresents() {
+        return presents;
+    }
 }

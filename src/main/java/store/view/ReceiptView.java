@@ -11,6 +11,7 @@ public class ReceiptView {
     public void displayReceipt(Purchases purchases, Presents presents, Membership membership) {
         System.out.printf(OutputMessage.RECEIPT_HEADER);
         displayPurchases(purchases);
+        displayPresents(presents);
     }
 
     private void displayPurchases(Purchases purchases) {
@@ -26,9 +27,14 @@ public class ReceiptView {
     }
 
     private void displayPresents(Presents presents) {
+        System.out.printf(OutputMessage.RECEIPT_PRESENT_HEADER);
+        presents.getPresents().forEach(this::displayPresent);
     }
 
     private void displayPresent(Present present) {
+        String productName = present.getProductName();
+        int amount = present.getAmount();
+        System.out.printf(OutputMessage.RECEIPT_PRESENT_BODY, productName, amount);
     }
 
     private void displayPrice(Purchases purchases, Presents presents, Membership membership) {
