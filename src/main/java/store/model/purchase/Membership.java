@@ -5,8 +5,8 @@ public class Membership {
     private static final int MAXIMUM_DISCOUNT = 8000;
     private final int discount;
 
-    public Membership(final Purchases purchases, final Presents presents) {
-        int priceWithoutDiscount = calculatePriceWithoutDiscount(purchases, presents);
+    public Membership(final Purchases purchases) {
+        int priceWithoutDiscount = calculatePriceWithoutDiscount(purchases);
         discount = membershipDiscount(priceWithoutDiscount);
     }
 
@@ -19,10 +19,10 @@ public class Membership {
         return Math.min(discountPrice, MAXIMUM_DISCOUNT);
     }
 
-    private int calculatePriceWithoutDiscount(final Purchases purchases, final Presents presents) {
+    private int calculatePriceWithoutDiscount(final Purchases purchases) {
         int totalPrice = purchases.calculateTotalPrice();
-        int promotionDiscount = presents.calculatePromotionDiscount();
-        return totalPrice - promotionDiscount;
+        int promotionPrice = purchases.calculatePromotionPrice();
+        return totalPrice - promotionPrice;
     }
 
     public int getDiscount() {

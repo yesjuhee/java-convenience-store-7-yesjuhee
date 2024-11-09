@@ -91,6 +91,10 @@ public class Purchase {
         return amount * product.getPrice();
     }
 
+    public int getPromotionPrice() {
+        return amountWithPromotion * product.getPrice();
+    }
+
     public int getAmount() {
         return amount;
     }

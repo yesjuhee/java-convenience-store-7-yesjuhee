@@ -69,9 +69,16 @@ public class Purchases {
                 .sum();
     }
 
+    public int calculatePromotionPrice() {
+        return purchases.stream()
+                .mapToInt(Purchase::getPromotionPrice)
+                .sum();
+    }
+
     public int calculateTotalAmount() {
         return purchases.stream()
                 .mapToInt(Purchase::getAmount)
                 .sum();
     }
+
 }

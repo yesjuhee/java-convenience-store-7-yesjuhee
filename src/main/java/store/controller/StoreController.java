@@ -97,7 +97,7 @@ public class StoreController {
     private void confirmToApplyMembership() {
         boolean applyMembership = retryUntilSuccess(confirmView::confirmToApplyMembership);
         if (applyMembership) {
-            membership = new Membership(purchases, presents);
+            membership = new Membership(purchases);
             return;
         }
         membership = new Membership();

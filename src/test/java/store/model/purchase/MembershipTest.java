@@ -27,10 +27,9 @@ class MembershipTest {
     void 프로모션미적용금액의_30퍼센트를할인한다() {
         // given
         Purchases purchases = new Purchases("[물-10]");
-        Presents presents = new Presents();
 
         // when
-        Membership membership = new Membership(purchases, presents);
+        Membership membership = new Membership(purchases);
 
         // then
         assertThat(membership.getDiscount()).isEqualTo(1500);
@@ -40,10 +39,9 @@ class MembershipTest {
     void 프로모션미적용_최대800원할인한다() {
         // given
         Purchases purchases = new Purchases("[물-10],[에너지바-5],[비타민워터-6],[정식도시락-8]");
-        Presents presents = new Presents();
 
         // when
-        Membership membership = new Membership(purchases, presents);
+        Membership membership = new Membership(purchases);
 
         // then
         assertThat(membership.getDiscount()).isEqualTo(8000);
