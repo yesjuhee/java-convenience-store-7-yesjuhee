@@ -30,13 +30,24 @@ public class Product {
         if (baseQuantity.getQuantity() + promotionQuantity.getQuantity() < purchaseAmount) {
             throw new IllegalArgumentException(ErrorMessage.OUT_OF_STOCK);
         }
-        if ((!hasPromotion() || !promotion.inPeriod()) && baseQuantity.getQuantity() < purchaseAmount) {
-            throw new IllegalArgumentException(ErrorMessage.OUT_OF_STOCK);
-        }
+    }
+
+    public boolean isInPromotion() {
+        return (hasPromotion() && promotion.inPeriod());
     }
 
     public boolean hasPromotion() {
         return this.promotion != null;
+    }
+
+    public void reduceQuantityWithoutPromotion(int amount) {
+        int difference = getBaseQuantity() - amount;
+        if (difference > 0) {
+            baseQuantity.subtract(amount);
+            return;
+        }
+        baseQuantity.subtract(getBaseQuantity());
+        promotionQuantity.subtract(difference * (-1));
     }
 
     public String getName() {

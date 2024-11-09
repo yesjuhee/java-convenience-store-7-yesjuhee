@@ -58,4 +58,8 @@ public class Purchases {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_FORMAT);
         }
     }
+
+    public List<Purchase> getPurchases() {
+        return purchases;
+    }
 }

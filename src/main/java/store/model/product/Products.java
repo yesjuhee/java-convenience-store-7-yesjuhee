@@ -27,6 +27,11 @@ public class Products {
         products.put(key, new Product(productData));
     }
 
+    public static void switchProduct(Product product) {
+        String key = product.getName();
+        products.put(key, product);
+    }
+
     public static Product getProductByName(String name) {
         return products.get(name);
     }
@@ -38,4 +43,5 @@ public class Products {
     public static boolean hasProduct(String productName) {
         return products.containsKey(productName);
     }
+
 }

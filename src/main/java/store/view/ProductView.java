@@ -11,7 +11,6 @@ public class ProductView {
     public void displayProducts(final List<Product> products) {
         System.out.printf(OutputMessage.WELCOME);
         products.forEach(this::displayProduct);
-        System.out.println();
     }
 
     private void displayProduct(final Product product) {

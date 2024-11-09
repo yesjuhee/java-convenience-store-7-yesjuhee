@@ -20,4 +20,22 @@ public class Purchase {
             throw new IllegalArgumentException(ErrorMessage.PRODUCT_NOT_EXIST);
         }
     }
+
+    public boolean canApplyPromotion() {
+        return product.isInPromotion();
+    }
+
+    public void purchaseWithoutPromotion() {
+        product.reduceQuantityWithoutPromotion(amount);
+        Products.switchProduct(product);
+    }
+
+    public String getProductName() {
+        return product.getName();
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
 }
