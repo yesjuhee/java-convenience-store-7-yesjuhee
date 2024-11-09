@@ -14,9 +14,8 @@ public class ConfirmView {
         return parseReply(reply);
     }
 
-
-    public boolean confirmToAddPromotionProduct(final String productName, final int amount) {
-        System.out.printf(OutputMessage.ADD_PROMOTION_PRODUCT_CONFIRM, productName, amount);
+    public boolean confirmToGetMoreProduct(final String productName) {
+        System.out.printf(OutputMessage.ADD_PROMOTION_PRODUCT_CONFIRM, productName);
         String reply = Console.readLine();
         return parseReply(reply);
     }

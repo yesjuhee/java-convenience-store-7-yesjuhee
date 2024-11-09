@@ -19,7 +19,7 @@ public class StoreController {
     private final PurchaseView purchaseView = new PurchaseView();
     private final ConfirmView confirmView = new ConfirmView();
     private Purchases purchases;
-    private Presents presents;
+    private Presents presents = new Presents();
     private Membership membership;
 
     public void run() {
@@ -47,8 +47,13 @@ public class StoreController {
 
     private void purchase() {
         purchases = retryUntilSuccess(this::readPurchaseInfo);
-        presents = new Presents();
-        purchases.getPurchases().forEach(this::confirmPurchase);
+        for (Purchase purchase : purchases.getPurchases()) {
+            if (purchase.canNotApplyPromotion()) {
+                purchase.purchaseWithoutPromotion();
+                continue;
+            }
+            confirmPurchaseWithPromotion(purchase);
+        }
         confirmToApplyMembership();
     }
 
@@ -57,17 +62,16 @@ public class StoreController {
         return new Purchases(purchaseInput);
     }
 
-    private void confirmPurchase(Purchase purchase) {
-        if (purchase.canNotApplyPromotion()) {
-            purchase.purchaseWithoutPromotion();
-            return;
-        }
+    private void confirmPurchaseWithPromotion(Purchase purchase) {
         if (purchase.notEnoughPromotionQuantity()) {
             confirmPurchaseAll(purchase);
 //            purchase.purchaseWithPromotion();
             return;
         }
-//        confirmAddPromotionProduct(purchase); 4.3 프로모션 추가
+        if (purchase.canGetMoreProduct() && purchase.purchaseAmountLessThanPromotionQuantity()) {
+            confirmGetMoreProduct(purchase);
+        }
+//        purchase.purchaseWithoutPromotion();
     }
 
     private void confirmPurchaseAll(Purchase purchase) {
@@ -78,7 +82,11 @@ public class StoreController {
         }
     }
 
-    private void confirmAddPromotionProduct(Purchase purchase) {
+    private void confirmGetMoreProduct(Purchase purchase) {
+        boolean getMoreProduct = confirmView.confirmToGetMoreProduct(purchase.getProductName());
+        if (getMoreProduct) {
+            purchase.addAmountByOne();
+        }
     }
 
 

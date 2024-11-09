@@ -3,6 +3,7 @@ package store.model.purchase;
 import store.constants.ErrorMessage;
 import store.model.product.Product;
 import store.model.product.Products;
+import store.model.promotion.Promotion;
 
 public class Purchase {
     private final Product product;
@@ -43,8 +44,21 @@ public class Purchase {
         return amount - product.getPromotionQuantity();
     }
 
+    public boolean purchaseAmountLessThanPromotionQuantity() {
+        return amount < product.getPromotionQuantity();
+    }
+
     public void excludeNonPromotedAmount() {
         amount -= calculateNonPromotionAmount();
+    }
+
+    public void addAmountByOne() {
+        amount += 1;
+    }
+
+    public boolean canGetMoreProduct() {
+        Promotion promotion = product.getPromotion();
+        return promotion.canGetMoreFreeProduct(amount);
     }
 
     public String getProductName() {
@@ -58,4 +72,5 @@ public class Purchase {
     public int getAmount() {
         return amount;
     }
+
 }

@@ -5,7 +5,8 @@ import store.constants.PromotionsFile;
 
 public class Promotion {
     private final String name;
-    private final PromotionFormat format;
+    private final int buy;
+    private final int get;
     private final Period period;
 
     public Promotion(List<String> promotionData) {
@@ -15,7 +16,8 @@ public class Promotion {
         String startDate = promotionData.get(PromotionsFile.START_DATE_COLUMN_NUM);
         String endDate = promotionData.get(PromotionsFile.END_DATE_COLUMN_NUM);
         this.name = name;
-        this.format = new PromotionFormat(buy, get);
+        this.buy = Integer.parseInt(buy);
+        this.get = Integer.parseInt(get);
         this.period = new Period(startDate, endDate);
     }
 
@@ -25,5 +27,9 @@ public class Promotion {
 
     public String getName() {
         return name;
+    }
+
+    public boolean canGetMoreFreeProduct(int purchaseAmount) {
+        return (purchaseAmount % (buy + get)) == buy;
     }
 }
