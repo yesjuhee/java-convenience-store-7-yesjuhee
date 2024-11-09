@@ -65,7 +65,13 @@ public class Purchases {
 
     public int calculateTotalPrice() {
         return purchases.stream()
-                .mapToInt((purchase) -> purchase.getTotalPurchasePrice())
+                .mapToInt(Purchase::getTotalPurchasePrice)
+                .sum();
+    }
+
+    public int calculateTotalAmount() {
+        return purchases.stream()
+                .mapToInt(Purchase::getAmount)
                 .sum();
     }
 }

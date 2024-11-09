@@ -12,6 +12,7 @@ public class ReceiptView {
         System.out.printf(OutputMessage.RECEIPT_HEADER);
         displayPurchases(purchases);
         displayPresents(presents);
+        displayPrice(purchases, presents, membership);
     }
 
     private void displayPurchases(Purchases purchases) {
@@ -38,5 +39,15 @@ public class ReceiptView {
     }
 
     private void displayPrice(Purchases purchases, Presents presents, Membership membership) {
+        int totalAmount = purchases.calculateTotalAmount();
+        int totalPrice = purchases.calculateTotalPrice();
+        int promotionDiscount = presents.calculatePromotionDiscount();
+        int membershipDiscount = membership.getDiscount();
+        System.out.printf(OutputMessage.RECEIPT_LINE);
+        System.out.printf(OutputMessage.RECEIPT_TOTAL_PRICE, totalAmount,
+                totalPrice);
+        System.out.printf(OutputMessage.RECEIPT_PROMOTION_DISCOUNT, promotionDiscount);
+        System.out.printf(OutputMessage.RECEIPT_MEMBERSHIP_DISCOUNT, membershipDiscount);
+        System.out.printf(OutputMessage.RECEIPT_FINAL_PRICE, totalPrice - promotionDiscount - membershipDiscount);
     }
 }
