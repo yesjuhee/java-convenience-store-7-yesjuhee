@@ -37,4 +37,8 @@ public class Purchase {
     public int getTotalPurchasePrice() {
         return amount * product.getPrice();
     }
+
+    public int getAmount() {
+        return amount;
+    }
 }

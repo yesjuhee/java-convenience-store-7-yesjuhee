@@ -13,6 +13,7 @@ import store.view.ConfirmView;
 import store.view.ErrorView;
 import store.view.ProductView;
 import store.view.PurchaseView;
+import store.view.ReceiptView;
 
 public class StoreController {
     private final PurchaseView purchaseView = new PurchaseView();
@@ -28,6 +29,7 @@ public class StoreController {
         presents = new Presents();
         purchases.getPurchases().forEach(this::confirmPurchase);
         confirmToApplyMembership();
+        displayReceipt();
     }
 
     private void fetchFileData() {
@@ -60,6 +62,11 @@ public class StoreController {
             return;
         }
         membership = new Membership();
+    }
+
+    private void displayReceipt() {
+        ReceiptView receiptView = new ReceiptView();
+        receiptView.displayReceipt(purchases, presents, membership);
     }
 
     private <T> T retryUntilSuccess(final Supplier<T> supplier) {

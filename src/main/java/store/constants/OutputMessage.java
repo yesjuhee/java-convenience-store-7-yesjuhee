@@ -15,14 +15,14 @@ public class OutputMessage {
     public static final String APPLY_MEMBERSHIP_CONFIRM = "%n멤버십 할인을 받으시겠습니까? (Y/N)%n";
     public static final String PURCHASE_CONTINUE_CONFIRM = "%n감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)%n";
 
-    public static final String RECEIPT_HEADER = "==============W 편의점================%n";
-    public static final String RECEIPT_PURCHASE_HEADER = String.format("%-18s %-8s %8s%n", "상품명", "수량", "금액");
-    public static final String RECEIPT_PURCHASE_BODY = "-18s %,-8d %,8d%n";
+    public static final String RECEIPT_HEADER = "%n================W 편의점================%n";
+    public static final String RECEIPT_PURCHASE_HEADER = String.format("%-18s%-8s%8s%n", "상품명", "수량", "금액");
+    public static final String RECEIPT_PURCHASE_BODY = "%-18s%,-8d%,8d%n";
     public static final String RECEIPT_PRESENT_HEADER = "=============증\t정===============%n";
     public static final String RECEIPT_PRESENT_BODY = "%-18s %,-18d%n";
     public static final String RECEIPT_LINE = "====================================%n"; // 36
-    public static final String RECEIPT_TOTAL_PRICE = String.format("%-18s %,-8d %,8d%n", "총구매액");
-    public static final String RECEIPT_PROMOTION_DISCOUNT = String.format("%-18s %,18d%n", "행사할인");
-    public static final String RECEIPT_MEMBERSHIP_DISCOUNT = String.format("%-18s %,18d%n", "멤버십할인");
-    public static final String RECEIPT_FINAL_PRICE = String.format("%-18s %,18d%n", "내실돈");
+//    public static final String RECEIPT_TOTAL_PRICE = String.format("%-18s %,-8d %,8d%n", "총구매액");
+//    public static final String RECEIPT_PROMOTION_DISCOUNT = String.format("%-18s %,18d%n", "행사할인");
+//    public static final String RECEIPT_MEMBERSHIP_DISCOUNT = String.format("%-18s %,18d%n", "멤버십할인");
+//    public static final String RECEIPT_FINAL_PRICE = String.format("%-18s %,18d%n", "내실돈");
 }
