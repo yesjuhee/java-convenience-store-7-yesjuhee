@@ -8,26 +8,33 @@ import store.model.promotion.Promotion;
 public class Purchase {
     private final Product product;
     private int amount;
-    private int amountWithPromotion = 0;
+    private int amountWithPromotion;
 
     public Purchase(final String productName, final int amount) {
         validateProductExist(productName);
         this.product = Products.getProductByName(productName);
         product.validatePurchaseAmount(amount);
         this.amount = amount;
-        initializeAmountWithPromotion();
+        this.amountWithPromotion = initializeAmountWithPromotion();
     }
 
-    private void initializeAmountWithPromotion() {
+    private int initializeAmountWithPromotion() {
         if (!product.isInPromotion()) {
-            return;
+            return 0;
         }
         int promotionQuantity = product.getPromotionQuantity();
         int promotionUnit = product.getPromotionUnit();
-        while (amountWithPromotion + promotionUnit < this.amount
-                && amountWithPromotion + promotionUnit < promotionQuantity) {
+        int amountWithPromotion = 0;
+        while (canAddPromotionUnit(amountWithPromotion, promotionUnit, promotionQuantity)) {
             amountWithPromotion += promotionUnit;
         }
+        return amountWithPromotion;
+    }
+
+    private boolean canAddPromotionUnit(final int amountWithPromotion, final int promotionUnit,
+                                        final int promotionQuantity) {
+        return amountWithPromotion + promotionUnit <= this.amount
+                && amountWithPromotion + promotionUnit <= promotionQuantity;
     }
 
     private void validateProductExist(final String productName) {
@@ -45,10 +52,10 @@ public class Purchase {
         Products.switchProduct(product);
     }
 
-//    public Present purchaseWithPromotion() {
-//        // product에서 수량 차감 -> 프로모션 재고 먼저, 일반 재고 나중에
-//        // present 추가 여기서?
-//    }
+    public void purchaseWithPromotion() {
+        product.reduceQuantityWithPromotion(amount);
+        Products.switchProduct(product);
+    }
 
     public boolean notEnoughPromotionQuantity() {
         return amount > product.getPromotionQuantity();
@@ -68,7 +75,7 @@ public class Purchase {
 
     public void addOneFreeProduct() {
         amount += 1;
-        amountWithPromotion += 1;
+        amountWithPromotion = initializeAmountWithPromotion();
     }
 
     public boolean canGetMoreFreeProduct() {
@@ -88,4 +95,7 @@ public class Purchase {
         return amount;
     }
 
+    public int calculatePresentAmount() {
+        return amountWithPromotion / product.getPromotionUnit();
+    }
 }

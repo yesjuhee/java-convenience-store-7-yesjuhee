@@ -41,13 +41,23 @@ public class Product {
     }
 
     public void reduceQuantityWithoutPromotion(int amount) {
-        int difference = getBaseQuantity() - amount;
-        if (difference > 0) {
+        if (getBaseQuantity() > amount) {
             baseQuantity.subtract(amount);
             return;
         }
+        int difference = amount - getBaseQuantity();
         baseQuantity.subtract(getBaseQuantity());
-        promotionQuantity.subtract(difference * (-1));
+        promotionQuantity.subtract(difference);
+    }
+
+    public void reduceQuantityWithPromotion(int amount) {
+        if (getPromotionQuantity() > amount) {
+            promotionQuantity.subtract(amount);
+            return;
+        }
+        int difference = amount - getPromotionQuantity();
+        promotionQuantity.subtract(getPromotionQuantity());
+        baseQuantity.subtract(difference);
     }
 
     public String getName() {
@@ -73,4 +83,5 @@ public class Product {
     public int getPromotionUnit() {
         return promotion.getPromotionUnit();
     }
+
 }

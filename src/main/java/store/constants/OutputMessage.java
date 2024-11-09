@@ -20,7 +20,7 @@ public class OutputMessage {
     public static final String RECEIPT_PURCHASE_BODY = "%-18s%,-8d%,8d%n";
     public static final String RECEIPT_PRESENT_HEADER = "================증   정================%n";
     public static final String RECEIPT_PRESENT_BODY = "%-18s %,-18d%n";
-    public static final String RECEIPT_LINE = "%n=====================================%n";
+    public static final String RECEIPT_LINE = "=====================================%n";
     public static final String RECEIPT_TOTAL_PRICE = "총구매액" + " ".repeat(14) + "%,-8d %,8d%n";
     public static final String RECEIPT_PROMOTION_DISCOUNT = "행사할인" + " ".repeat(30) + "-%,d%n";
     public static final String RECEIPT_MEMBERSHIP_DISCOUNT = "멤버십할인" + " ".repeat(29) + "-%,d%n";

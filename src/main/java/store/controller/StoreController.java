@@ -19,20 +19,23 @@ public class StoreController {
     private final PurchaseView purchaseView = new PurchaseView();
     private final ConfirmView confirmView = new ConfirmView();
     private Purchases purchases;
-    private Presents presents = new Presents();
+    private Presents presents;
     private Membership membership;
 
     public void run() {
         fetchFileData();
-        while (true) {
+        do {
+            initializePresents();
             displayProducts();
             purchase();
+            confirmToApplyMembership();
             displayReceipt();
-            if (!confirmToPurchaseMore()) {
-                break;
-            }
-        }
+        } while (confirmToPurchaseMore());
         Products.saveProductsData(ProductsFile.FILE_PATH);
+    }
+
+    private void initializePresents() {
+        presents = new Presents();
     }
 
     private void fetchFileData() {
@@ -52,9 +55,10 @@ public class StoreController {
                 purchase.purchaseWithoutPromotion();
                 continue;
             }
-            confirmPurchaseWithPromotion(purchase);
+            confirmPurchaseAmount(purchase);
+            purchase.purchaseWithPromotion();
+            presents.addPresent(purchase);
         }
-        confirmToApplyMembership();
     }
 
     private Purchases readPurchaseInfo() {
@@ -62,28 +66,28 @@ public class StoreController {
         return new Purchases(purchaseInput);
     }
 
-    private void confirmPurchaseWithPromotion(Purchase purchase) {
+    private void confirmPurchaseAmount(Purchase purchase) {
         if (purchase.notEnoughPromotionQuantity()) {
             confirmPurchaseAll(purchase);
-//            purchase.purchaseWithPromotion();
             return;
         }
         if (purchase.canGetMoreFreeProduct() && purchase.purchaseAmountLessThanPromotionQuantity()) {
             confirmGetMoreFreeProduct(purchase);
         }
-//        purchase.purchaseWithoutPromotion();
     }
 
     private void confirmPurchaseAll(Purchase purchase) {
-        boolean purchaseAll = confirmView.confirmToPurchaseAll(purchase.getProductName(),
-                purchase.calculateAmountWithoutPromotion());
+        boolean purchaseAll = retryUntilSuccess(() ->
+                confirmView.confirmToPurchaseAll(purchase.getProductName(),
+                        purchase.calculateAmountWithoutPromotion()));
         if (!purchaseAll) {
             purchase.excludeNonPromotedAmount();
         }
     }
 
     private void confirmGetMoreFreeProduct(Purchase purchase) {
-        boolean getMoreProduct = confirmView.confirmToGetMoreProduct(purchase.getProductName());
+        boolean getMoreProduct = retryUntilSuccess(
+                () -> confirmView.confirmToGetMoreProduct(purchase.getProductName()));
         if (getMoreProduct) {
             purchase.addOneFreeProduct();
         }
