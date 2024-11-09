@@ -10,4 +10,8 @@ public class Present {
         this.product = product;
         this.amount = amount;
     }
+
+    public int getTotalPresentPrice() {
+        return product.getPrice() * amount;
+    }
 }

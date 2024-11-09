@@ -9,4 +9,8 @@ public class Presents {
     public boolean hasPresent() {
         return !presents.isEmpty();
     }
+
+    public int calculatePromotionDiscount() {
+        return presents.stream().mapToInt((present) -> present.getTotalPresentPrice()).sum();
+    }
 }

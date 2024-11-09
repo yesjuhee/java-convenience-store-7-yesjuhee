@@ -62,4 +62,10 @@ public class Purchases {
     public List<Purchase> getPurchases() {
         return purchases;
     }
+
+    public int calculateTotalPrice() {
+        return purchases.stream()
+                .mapToInt((purchase) -> purchase.getTotalPurchasePrice())
+                .sum();
+    }
 }

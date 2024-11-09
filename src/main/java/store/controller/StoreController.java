@@ -5,27 +5,29 @@ import store.constants.ProductsFile;
 import store.constants.PromotionsFile;
 import store.model.product.Products;
 import store.model.promotion.Promotions;
+import store.model.purchase.Membership;
 import store.model.purchase.Presents;
 import store.model.purchase.Purchase;
 import store.model.purchase.Purchases;
+import store.view.ConfirmView;
 import store.view.ErrorView;
 import store.view.ProductView;
 import store.view.PurchaseView;
 
 public class StoreController {
     private final PurchaseView purchaseView = new PurchaseView();
+    private final ConfirmView confirmView = new ConfirmView();
     private Purchases purchases;
     private Presents presents;
+    private Membership membership;
 
     public void run() {
         fetchFileData();
         displayProducts();
-        purchases = retryUntilSuccess(() -> readPurchaseInfo());
+        purchases = retryUntilSuccess(this::readPurchaseInfo);
         presents = new Presents();
         purchases.getPurchases().forEach(this::confirmPurchase);
-//        Presents presents = retryUntilSuccess(() -> applyPromotion(purchases)); // 프로모션 적용 상품 개수 확정
-//        Purchases finalPurchases = retryUntilSuccess(() -> applyNoPromotion(purchases));
-
+        confirmToApplyMembership();
     }
 
     private void fetchFileData() {
@@ -46,23 +48,19 @@ public class StoreController {
     private void confirmPurchase(Purchase purchase) {
         if (!purchase.canApplyPromotion()) {
             purchase.purchaseWithoutPromotion();
-            return; // 변동 없음
+            return;
         }
         System.out.println("프로모션 적용");
     }
 
-//    private Presents applyPromotion(final Purchases purchases) {
-////        boolean reply = purchaseView.confirmToAddPromotionProduct();
-////        System.out.println(reply + "\n");
-//        return null;
-//    }
-
-//    private Purchases applyNoPromotion(Purchases purchases) {
-//    }
-
-    // 멤버십
-
-    // 영수증
+    private void confirmToApplyMembership() {
+        boolean applyMembership = retryUntilSuccess(confirmView::confirmToApplyMembership);
+        if (applyMembership) {
+            membership = new Membership(purchases, presents);
+            return;
+        }
+        membership = new Membership();
+    }
 
     private <T> T retryUntilSuccess(final Supplier<T> supplier) {
         ErrorView errorView = new ErrorView();

@@ -34,8 +34,7 @@ public class Purchase {
         return product.getName();
     }
 
-    public int getAmount() {
-        return amount;
+    public int getTotalPurchasePrice() {
+        return amount * product.getPrice();
     }
-
 }
