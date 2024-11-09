@@ -1,9 +1,11 @@
 package store;
 
+import static camp.nextstep.edu.missionutils.test.Assertions.assertNowTest;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 
 class ApplicationTest extends NsTest {
@@ -34,21 +36,21 @@ class ApplicationTest extends NsTest {
         });
     }
 
-//    @Test
-//    void 여러_개의_일반_상품_구매() {
-//        assertSimpleTest(() -> {
-//            run("[비타민워터-3],[물-2],[정식도시락-2]", "N", "N");
-//            assertThat(output().replaceAll("\\s", "")).contains("내실돈18,300");
-//        });
-//    }
-//
-//    @Test
-//    void 기간에_해당하지_않는_프로모션_적용() {
-//        assertNowTest(() -> {
-//            run("[감자칩-2]", "N", "N");
-//            assertThat(output().replaceAll("\\s", "")).contains("내실돈3,000");
-//        }, LocalDate.of(2024, 2, 1).atStartOfDay());
-//    }
+    @Test
+    void 여러_개의_일반_상품_구매() {
+        assertSimpleTest(() -> {
+            run("[비타민워터-3],[물-2],[정식도시락-2]", "N", "N");
+            assertThat(output().replaceAll("\\s", "")).contains("내실돈18,300");
+        });
+    }
+
+    @Test
+    void 기간에_해당하지_않는_프로모션_적용() {
+        assertNowTest(() -> {
+            run("[감자칩-2]", "N", "N");
+            assertThat(output().replaceAll("\\s", "")).contains("내실돈3,000");
+        }, LocalDate.of(2024, 2, 1).atStartOfDay());
+    }
 
     @Test
     void 예외_테스트() {

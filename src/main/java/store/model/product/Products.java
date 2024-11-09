@@ -1,7 +1,11 @@
 package store.model.product;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
+import store.constants.ProductsFile;
 import store.utils.FileUtils;
 
 public class Products {
@@ -15,6 +19,32 @@ public class Products {
             String productName = productData.getName();
             updateProducts(productName, productData);
         }
+    }
+
+    public static void saveProductsData(final String filePath) {
+        List<List<String>> data = new ArrayList<>();
+        for (Entry<String, Product> productEntry : products.entrySet()) {
+            Product product = productEntry.getValue();
+            data = addBaseData(product, data);
+            if (product.hasPromotion()) {
+                data = addPromotionData(product, data);
+            }
+        }
+        FileUtils.saveCsvFile(filePath, data, ProductsFile.FILE_HEADER);
+    }
+
+    private static List<List<String>> addBaseData(Product product, List<List<String>> data) {
+        List<String> rowData = Arrays.asList(product.getName(), Integer.toString(product.getPrice()),
+                Integer.toString(product.getBaseQuantity()), ProductsFile.NO_VALUE);
+        data.add(rowData);
+        return data;
+    }
+
+    private static List<List<String>> addPromotionData(Product product, List<List<String>> data) {
+        List<String> rowData = Arrays.asList(product.getName(), Integer.toString(product.getPrice()),
+                Integer.toString(product.getPromotionQuantity()), product.getPromotion().getName());
+        data.add(rowData);
+        return data;
     }
 
     private static void updateProducts(final String key, final ProductData productData) {

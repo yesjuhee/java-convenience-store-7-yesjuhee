@@ -24,12 +24,15 @@ public class StoreController {
 
     public void run() {
         fetchFileData();
-        displayProducts();
-        purchases = retryUntilSuccess(this::readPurchaseInfo);
-        presents = new Presents();
-        purchases.getPurchases().forEach(this::confirmPurchase);
-        confirmToApplyMembership();
-        displayReceipt();
+        while (true) {
+            displayProducts();
+            purchase();
+            displayReceipt();
+            if (!confirmToPurchaseMore()) {
+                break;
+            }
+        }
+        Products.saveProductsData(ProductsFile.FILE_PATH);
     }
 
     private void fetchFileData() {
@@ -40,6 +43,13 @@ public class StoreController {
     private void displayProducts() {
         ProductView productView = new ProductView();
         productView.displayProducts(Products.getProducts());
+    }
+
+    private void purchase() {
+        purchases = retryUntilSuccess(this::readPurchaseInfo);
+        presents = new Presents();
+        purchases.getPurchases().forEach(this::confirmPurchase);
+        confirmToApplyMembership();
     }
 
     private Purchases readPurchaseInfo() {
@@ -67,6 +77,10 @@ public class StoreController {
     private void displayReceipt() {
         ReceiptView receiptView = new ReceiptView();
         receiptView.displayReceipt(purchases, presents, membership);
+    }
+
+    private boolean confirmToPurchaseMore() {
+        return retryUntilSuccess(confirmView::confirmToPurchaseMore);
     }
 
     private <T> T retryUntilSuccess(final Supplier<T> supplier) {

@@ -24,9 +24,11 @@ public class ConfirmView {
 //    }
 //
 
-//
-//    public boolean confirmToPurchaseMore() {
-//    }
+    public boolean confirmToPurchaseMore() {
+        System.out.printf(OutputMessage.PURCHASE_CONTINUE_CONFIRM);
+        String reply = Console.readLine();
+        return parseReply(reply);
+    }
 
     private boolean parseReply(String replyInput) {
         if (replyInput.matches(YES_REGEX)) {

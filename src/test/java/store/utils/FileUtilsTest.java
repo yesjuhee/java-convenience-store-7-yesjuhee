@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import store.constants.ProductsFile;
 
 class FileUtilsTest {
-
     @Test
     void 원하는파일을읽어서_2차원배열로반환한다() {
         // given

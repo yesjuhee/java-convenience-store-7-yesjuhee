@@ -1,6 +1,7 @@
 package store.utils;
 
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -11,7 +12,7 @@ import java.util.List;
 public class FileUtils {
     private static final String CSV_DELIMITER = ",";
 
-    public static List<List<String>> readCsvBody(String filePath) {
+    public static List<List<String>> readCsvBody(final String filePath) {
         List<List<String>> data = new ArrayList<>();
         try (BufferedReader br = Files.newBufferedReader(Paths.get(filePath))) {
             String line;
@@ -21,11 +22,27 @@ public class FileUtils {
         } catch (IOException e) {
             System.out.println("[ERROR]" + e.getMessage());
         }
-        return removeFirstRow(data);
+        return removeHeader(data);
     }
 
-    private static List<List<String>> removeFirstRow(List<List<String>> data) {
+    public static void saveCsvFile(final String filePath, final List<List<String>> saveData,
+                                   final List<String> header) {
+        try (FileWriter writer = new FileWriter(filePath)) {
+            writer.append(csvFormatRow(header));
+            for (List<String> row : saveData) {
+                writer.append(csvFormatRow(row));
+            }
+        } catch (IOException e) {
+            System.out.println("[ERROR]" + e.getMessage());
+        }
+    }
+
+    private static List<List<String>> removeHeader(List<List<String>> data) {
         data.removeFirst();
         return data;
+    }
+
+    private static String csvFormatRow(List<String> data) {
+        return String.join(CSV_DELIMITER, data) + "\n";
     }
 }
