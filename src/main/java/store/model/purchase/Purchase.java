@@ -6,7 +6,7 @@ import store.model.product.Products;
 
 public class Purchase {
     private final Product product;
-    private final int amount;
+    private int amount;
 
     public Purchase(final String productName, final int amount) {
         validateProductExist(productName);
@@ -21,13 +21,30 @@ public class Purchase {
         }
     }
 
-    public boolean canApplyPromotion() {
-        return product.isInPromotion();
+    public boolean canNotApplyPromotion() {
+        return !product.isInPromotion();
     }
 
     public void purchaseWithoutPromotion() {
         product.reduceQuantityWithoutPromotion(amount);
         Products.switchProduct(product);
+    }
+
+//    public Present purchaseWithPromotion() {
+//        // product에서 수량 차감 -> 프로모션 재고 먼저, 일반 재고 나중에
+//        // present 추가 여기서?
+//    }
+
+    public boolean notEnoughPromotionQuantity() {
+        return amount > product.getPromotionQuantity();
+    }
+
+    public int calculateNonPromotionAmount() {
+        return amount - product.getPromotionQuantity();
+    }
+
+    public void excludeNonPromotedAmount() {
+        amount -= calculateNonPromotionAmount();
     }
 
     public String getProductName() {

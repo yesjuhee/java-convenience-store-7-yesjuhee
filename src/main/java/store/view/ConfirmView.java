@@ -8,11 +8,18 @@ public class ConfirmView {
     private static final String YES_REGEX = "[Yy]";
     private static final String NO_REGEX = "[Nn]";
 
-//    public boolean confirmToAddPromotionProduct(String productName, String amount) {
-//        System.out.printf(OutputMessage.ADD_PROMOTION_PRODUCT_CONFIRM, productName, amount);
-//        String reply = Console.readLine();
-//        return parseReply(reply);
-//    }
+    public boolean confirmToPurchaseAll(final String productName, final int amount) {
+        System.out.printf(OutputMessage.PURCHASE_ALL_CONFIRM, productName, amount);
+        String reply = Console.readLine();
+        return parseReply(reply);
+    }
+
+
+    public boolean confirmToAddPromotionProduct(final String productName, final int amount) {
+        System.out.printf(OutputMessage.ADD_PROMOTION_PRODUCT_CONFIRM, productName, amount);
+        String reply = Console.readLine();
+        return parseReply(reply);
+    }
 
     public boolean confirmToApplyMembership() {
         System.out.printf(OutputMessage.APPLY_MEMBERSHIP_CONFIRM);
@@ -20,17 +27,13 @@ public class ConfirmView {
         return parseReply(reply);
     }
 
-//    public boolean confirmToPayFullPrice() {
-//    }
-//
-
     public boolean confirmToPurchaseMore() {
         System.out.printf(OutputMessage.PURCHASE_CONTINUE_CONFIRM);
         String reply = Console.readLine();
         return parseReply(reply);
     }
 
-    private boolean parseReply(String replyInput) {
+    private boolean parseReply(final String replyInput) {
         if (replyInput.matches(YES_REGEX)) {
             return true;
         }

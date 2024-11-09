@@ -58,12 +58,29 @@ public class StoreController {
     }
 
     private void confirmPurchase(Purchase purchase) {
-        if (!purchase.canApplyPromotion()) {
+        if (purchase.canNotApplyPromotion()) {
             purchase.purchaseWithoutPromotion();
             return;
         }
-        System.out.println("프로모션 적용");
+        if (purchase.notEnoughPromotionQuantity()) {
+            confirmPurchaseAll(purchase);
+//            purchase.purchaseWithPromotion();
+            return;
+        }
+//        confirmAddPromotionProduct(purchase); 4.3 프로모션 추가
     }
+
+    private void confirmPurchaseAll(Purchase purchase) {
+        boolean purchaseAll = confirmView.confirmToPurchaseAll(purchase.getProductName(),
+                purchase.calculateNonPromotionAmount());
+        if (!purchaseAll) {
+            purchase.excludeNonPromotedAmount();
+        }
+    }
+
+    private void confirmAddPromotionProduct(Purchase purchase) {
+    }
+
 
     private void confirmToApplyMembership() {
         boolean applyMembership = retryUntilSuccess(confirmView::confirmToApplyMembership);
