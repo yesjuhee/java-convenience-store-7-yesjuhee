@@ -9,7 +9,7 @@ import store.constants.ProductsFile;
 import store.utils.FileUtils;
 
 public class ProductDatabase {
-    private static HashMap<String, Product> products = new HashMap<>();
+    private static final HashMap<String, Product> products = new HashMap<>();
 
     public static void fetchProductsFile(final String filePath) {
         List<ProductData> productsData = FileUtils.readCsvBody(filePath)
