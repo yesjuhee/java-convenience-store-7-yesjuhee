@@ -16,10 +16,9 @@ public class Period {
     public boolean isIn() {
         LocalDateTime nowDateTime = DateTimes.now();
         LocalDate now = nowDateTime.toLocalDate();
-        if (now.isEqual(startDate) || now.isEqual(endDate)) {
-            return true;
-        }
-        if (now.isAfter(startDate) && now.isBefore(endDate)) {
+        if (now.isEqual(startDate)
+                || now.isEqual(endDate)
+                || (now.isAfter(startDate) && now.isBefore(endDate))) {
             return true;
         }
         return false;

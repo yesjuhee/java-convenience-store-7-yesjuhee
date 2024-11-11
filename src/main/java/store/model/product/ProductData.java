@@ -9,7 +9,7 @@ public class ProductData {
     private final String quantify;
     private final String promotion;
 
-    public ProductData(List<String> productData) {
+    public ProductData(final List<String> productData) {
         this.name = productData.get(ProductsFile.NAME_COLUMN_NUMBER);
         this.price = productData.get(ProductsFile.PRICE_COLUMN_NUMBER);
         this.quantify = productData.get(ProductsFile.QUANTITY_COLUMN_NUMBER);

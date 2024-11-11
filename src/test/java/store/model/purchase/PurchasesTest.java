@@ -10,12 +10,12 @@ import org.junit.jupiter.params.provider.ValueSource;
 import store.constant.Path;
 import store.constants.ErrorMessage;
 import store.model.product.ProductDatabase;
-import store.model.promotion.Promotions;
+import store.model.promotion.PromotionDatabase;
 
 class PurchasesTest {
     @BeforeEach
     void setUp() {
-        Promotions.fetchPromotionsData(Path.PATH_TO_RESOURCES + "promotions.md");
+        PromotionDatabase.fetchPromotionsFile(Path.PATH_TO_RESOURCES + "promotions.md");
         ProductDatabase.fetchProductsFile(Path.PATH_TO_RESOURCES + "products.md");
     }
 

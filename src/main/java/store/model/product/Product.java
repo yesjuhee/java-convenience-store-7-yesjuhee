@@ -2,7 +2,7 @@ package store.model.product;
 
 import store.constants.ErrorMessage;
 import store.model.promotion.Promotion;
-import store.model.promotion.Promotions;
+import store.model.promotion.PromotionDatabase;
 
 public class Product {
     private final String name;
@@ -19,7 +19,7 @@ public class Product {
 
     public void updateQuantity(final ProductData productData) {
         if (productData.hasPromotion()) {
-            this.promotion = Promotions.getPromotionByName(productData.getPromotion());
+            this.promotion = PromotionDatabase.getPromotionByName(productData.getPromotion());
             this.promotionQuantity = new Quantity(productData.getQuantify());
             return;
         }

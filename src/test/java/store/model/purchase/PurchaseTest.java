@@ -8,12 +8,12 @@ import org.junit.jupiter.api.Test;
 import store.constant.Path;
 import store.model.product.Product;
 import store.model.product.ProductDatabase;
-import store.model.promotion.Promotions;
+import store.model.promotion.PromotionDatabase;
 
 class PurchaseTest {
     @BeforeEach
     void setUp() {
-        Promotions.fetchPromotionsData(Path.PATH_TO_RESOURCES + "promotions.md");
+        PromotionDatabase.fetchPromotionsFile(Path.PATH_TO_RESOURCES + "promotions.md");
         ProductDatabase.fetchProductsFile(Path.PATH_TO_RESOURCES + "products.md");
     }
 
