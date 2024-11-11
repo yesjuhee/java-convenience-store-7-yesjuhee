@@ -21,7 +21,7 @@ public class Membership {
 
     private static int calculatePriceWithoutPromotion(final Purchases purchases) {
         int totalPrice = purchases.calculateTotalPrice();
-        int promotionPrice = purchases.calculatePromotionPrice();
+        int promotionPrice = purchases.calculatePromotionDiscountPrice();
         return totalPrice - promotionPrice;
     }
 

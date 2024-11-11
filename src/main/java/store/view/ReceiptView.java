@@ -29,7 +29,7 @@ public class ReceiptView {
     private void displayPurchase(final Purchase purchase) {
         String productName = purchase.getProductName();
         int amount = purchase.getAmount();
-        int totalPrice = purchase.getTotalPurchasePrice();
+        int totalPrice = purchase.calculateTotalPurchasePrice();
         System.out.printf(OutputMessage.RECEIPT_PURCHASE_BODY.getFormatMessage(productName, amount, totalPrice));
     }
 

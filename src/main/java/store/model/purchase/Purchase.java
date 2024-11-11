@@ -18,6 +18,64 @@ public class Purchase {
         this.amountWithPromotion = initializeAmountWithPromotion();
     }
 
+    public void purchaseWithoutPromotion() {
+        product.reduceQuantityWithoutPromotion(amount);
+        ProductDatabase.updateProductDatabase(product);
+    }
+
+    public void purchaseWithPromotion() {
+        product.reduceQuantityWithPromotion(amount);
+        ProductDatabase.updateProductDatabase(product);
+    }
+
+    public boolean canNotApplyPromotion() {
+        return product.isNotInPromotion();
+    }
+
+    public boolean notEnoughPromotionQuantity() {
+        return amount > product.getPromotionQuantity();
+    }
+
+    public boolean canGetMoreFreeProduct() {
+        Promotion promotion = product.getPromotion();
+        return promotion.canGetMoreFreeProduct(amount);
+    }
+
+    public boolean purchaseAmountLessThanPromotionQuantity() {
+        return amount < product.getPromotionQuantity();
+    }
+
+    public int calculateAmountWithoutPromotion() {
+        return amount - amountWithPromotion;
+    }
+
+    public int calculateTotalPurchasePrice() {
+        return amount * product.getPrice();
+    }
+
+    public int calculatePromotionDiscountPrice() {
+        return amountWithPromotion * product.getPrice();
+    }
+
+    public int calculatePresentAmount() {
+        return amountWithPromotion / product.getPromotionUnit();
+    }
+
+    public void excludeNonPromotedAmount() {
+        amount = amountWithPromotion;
+    }
+
+    public void addOneFreeProduct() {
+        amount += 1;
+        amountWithPromotion = initializeAmountWithPromotion();
+    }
+
+    private void validateProductExist(final String productName) {
+        if (!ProductDatabase.hasProduct(productName)) {
+            throw new IllegalArgumentException(ErrorMessage.PRODUCT_NOT_EXIST.getFormatMessage());
+        }
+    }
+
     private int initializeAmountWithPromotion() {
         if (product.isNotInPromotion()) {
             return 0;
@@ -37,69 +95,11 @@ public class Purchase {
                 && amountWithPromotion + promotionUnit <= promotionQuantity;
     }
 
-    private void validateProductExist(final String productName) {
-        if (!ProductDatabase.hasProduct(productName)) {
-            throw new IllegalArgumentException(ErrorMessage.PRODUCT_NOT_EXIST.getFormatMessage());
-        }
-    }
-
-    public boolean canNotApplyPromotion() {
-        return product.isNotInPromotion();
-    }
-
-    public void purchaseWithoutPromotion() {
-        product.reduceQuantityWithoutPromotion(amount);
-        ProductDatabase.updateProductDatabase(product);
-    }
-
-    public void purchaseWithPromotion() {
-        product.reduceQuantityWithPromotion(amount);
-        ProductDatabase.updateProductDatabase(product);
-    }
-
-    public boolean notEnoughPromotionQuantity() {
-        return amount > product.getPromotionQuantity();
-    }
-
-    public int calculateAmountWithoutPromotion() {
-        return amount - amountWithPromotion;
-    }
-
-    public boolean purchaseAmountLessThanPromotionQuantity() {
-        return amount < product.getPromotionQuantity();
-    }
-
-    public void excludeNonPromotedAmount() {
-        amount = amountWithPromotion;
-    }
-
-    public void addOneFreeProduct() {
-        amount += 1;
-        amountWithPromotion = initializeAmountWithPromotion();
-    }
-
-    public boolean canGetMoreFreeProduct() {
-        Promotion promotion = product.getPromotion();
-        return promotion.canGetMoreFreeProduct(amount);
-    }
-
     public String getProductName() {
         return product.getName();
     }
 
-    public int getTotalPurchasePrice() {
-        return amount * product.getPrice();
-    }
-
-    public int getPromotionPrice() {
-        return amountWithPromotion * product.getPrice();
-    }
-
     public int getAmount() {
         return amount;
-    }
-
-    public int calculatePresentAmount() {
-        return amountWithPromotion / product.getPromotionUnit();
     }
 }

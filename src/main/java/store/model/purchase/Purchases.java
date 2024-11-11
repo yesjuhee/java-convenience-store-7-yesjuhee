@@ -1,6 +1,5 @@
 package store.model.purchase;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import store.constants.ErrorMessage;
@@ -12,26 +11,35 @@ public class Purchases {
     private static final String PURCHASE_DELIMITER = ",";
     private static final String POSITIVE_INTEGER_REGEX = "\\d+";
 
-    private final List<Purchase> purchases = new ArrayList<>();
+    private final List<Purchase> purchases;
 
     public Purchases(final String purchasesInput) {
         List<String> splitPurchaseInput = splitInput(purchasesInput);
-        for (String purchaseInput : splitPurchaseInput) {
-            purchases.add(parsePurchase(purchaseInput));
-        }
+        splitPurchaseInput.forEach(this::validatePurchaseFormat);
+        this.purchases = splitPurchaseInput.stream().map(this::parsePurchase).toList();
+    }
+
+    public int calculateTotalPrice() {
+        return purchases.stream()
+                .mapToInt(Purchase::calculateTotalPurchasePrice)
+                .sum();
+    }
+
+    public int calculatePromotionDiscountPrice() {
+        return purchases.stream()
+                .mapToInt(Purchase::calculatePromotionDiscountPrice)
+                .sum();
+    }
+
+    public int calculateTotalAmount() {
+        return purchases.stream()
+                .mapToInt(Purchase::getAmount)
+                .sum();
     }
 
     private List<String> splitInput(final String input) {
         return Arrays.stream(input.split(PURCHASE_DELIMITER))
                 .map(String::strip).toList();
-    }
-
-    private Purchase parsePurchase(final String purchaseInput) {
-        validatePurchaseFormat(purchaseInput);
-        String productName = splitProductName(purchaseInput).strip();
-        String amountInput = splitAmountInput(purchaseInput).strip();
-        validatePositiveNumber(amountInput);
-        return new Purchase(productName, Integer.parseInt(amountInput));
     }
 
     private void validatePurchaseFormat(final String productInput) {
@@ -43,6 +51,13 @@ public class Purchases {
         if (productInput.indexOf(PRODUCT_DELIMITER, delimiterIndex + 1) != -1) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_FORMAT.getFormatMessage());
         }
+    }
+
+    private Purchase parsePurchase(final String purchaseInput) {
+        String productName = splitProductName(purchaseInput).strip();
+        String purchaseAmount = splitAmountInput(purchaseInput).strip();
+        validatePositiveNumber(purchaseAmount);
+        return new Purchase(productName, Integer.parseInt(purchaseAmount));
     }
 
     private String splitProductName(final String purchaseInput) {
@@ -62,23 +77,4 @@ public class Purchases {
     public List<Purchase> getPurchases() {
         return purchases;
     }
-
-    public int calculateTotalPrice() {
-        return purchases.stream()
-                .mapToInt(Purchase::getTotalPurchasePrice)
-                .sum();
-    }
-
-    public int calculatePromotionPrice() {
-        return purchases.stream()
-                .mapToInt(Purchase::getPromotionPrice)
-                .sum();
-    }
-
-    public int calculateTotalAmount() {
-        return purchases.stream()
-                .mapToInt(Purchase::getAmount)
-                .sum();
-    }
-
 }
