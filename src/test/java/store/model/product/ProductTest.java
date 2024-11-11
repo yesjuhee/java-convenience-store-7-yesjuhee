@@ -27,7 +27,7 @@ class ProductTest {
         // when & then
         assertThatThrownBy(() -> product.validatePurchaseAmount(21))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.OUT_OF_STOCK);
+                .hasMessage(ErrorMessage.OUT_OF_STOCK.getFormatMessage());
     }
 
     @Test

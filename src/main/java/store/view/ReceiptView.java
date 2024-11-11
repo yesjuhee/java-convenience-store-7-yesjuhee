@@ -1,6 +1,6 @@
 package store.view;
 
-import store.constants.OutputMessage;
+import store.constants.OutputMessageDeprecated;
 import store.model.purchase.Membership;
 import store.model.purchase.Present;
 import store.model.purchase.Presents;
@@ -9,14 +9,14 @@ import store.model.purchase.Purchases;
 
 public class ReceiptView {
     public void displayReceipt(Purchases purchases, Presents presents, Membership membership) {
-        System.out.printf(OutputMessage.RECEIPT_HEADER);
+        System.out.printf(OutputMessageDeprecated.RECEIPT_HEADER);
         displayPurchases(purchases);
         displayPresents(presents);
         displayPrice(purchases, presents, membership);
     }
 
     private void displayPurchases(Purchases purchases) {
-        System.out.printf(OutputMessage.RECEIPT_PURCHASE_HEADER);
+        System.out.printf(OutputMessageDeprecated.RECEIPT_PURCHASE_HEADER);
         purchases.getPurchases().forEach(this::displayPurchase);
     }
 
@@ -24,18 +24,18 @@ public class ReceiptView {
         String productName = purchase.getProductName();
         int amount = purchase.getAmount();
         int totalPrice = purchase.getTotalPurchasePrice();
-        System.out.printf(OutputMessage.RECEIPT_PURCHASE_BODY, productName, amount, totalPrice);
+        System.out.printf(OutputMessageDeprecated.RECEIPT_PURCHASE_BODY, productName, amount, totalPrice);
     }
 
     private void displayPresents(Presents presents) {
-        System.out.printf(OutputMessage.RECEIPT_PRESENT_HEADER);
+        System.out.printf(OutputMessageDeprecated.RECEIPT_PRESENT_HEADER);
         presents.getPresents().forEach(this::displayPresent);
     }
 
     private void displayPresent(Present present) {
         String productName = present.getProductName();
         int amount = present.getAmount();
-        System.out.printf(OutputMessage.RECEIPT_PRESENT_BODY, productName, amount);
+        System.out.printf(OutputMessageDeprecated.RECEIPT_PRESENT_BODY, productName, amount);
     }
 
     private void displayPrice(Purchases purchases, Presents presents, Membership membership) {
@@ -43,11 +43,12 @@ public class ReceiptView {
         int totalPrice = purchases.calculateTotalPrice();
         int promotionDiscount = presents.calculatePromotionDiscount();
         int membershipDiscount = membership.getDiscount();
-        System.out.printf(OutputMessage.RECEIPT_LINE);
-        System.out.printf(OutputMessage.RECEIPT_TOTAL_PRICE, totalAmount,
+        System.out.printf(OutputMessageDeprecated.RECEIPT_LINE);
+        System.out.printf(OutputMessageDeprecated.RECEIPT_TOTAL_PRICE, totalAmount,
                 totalPrice);
-        System.out.printf(OutputMessage.RECEIPT_PROMOTION_DISCOUNT, promotionDiscount);
-        System.out.printf(OutputMessage.RECEIPT_MEMBERSHIP_DISCOUNT, membershipDiscount);
-        System.out.printf(OutputMessage.RECEIPT_FINAL_PRICE, totalPrice - promotionDiscount - membershipDiscount);
+        System.out.printf(OutputMessageDeprecated.RECEIPT_PROMOTION_DISCOUNT, promotionDiscount);
+        System.out.printf(OutputMessageDeprecated.RECEIPT_MEMBERSHIP_DISCOUNT, membershipDiscount);
+        System.out.printf(OutputMessageDeprecated.RECEIPT_FINAL_PRICE,
+                totalPrice - promotionDiscount - membershipDiscount);
     }
 }

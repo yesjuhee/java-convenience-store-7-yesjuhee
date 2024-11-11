@@ -39,7 +39,7 @@ public class Purchase {
 
     private void validateProductExist(final String productName) {
         if (!Products.hasProduct(productName)) {
-            throw new IllegalArgumentException(ErrorMessage.PRODUCT_NOT_EXIST);
+            throw new IllegalArgumentException(ErrorMessage.PRODUCT_NOT_EXIST.getFormatMessage());
         }
     }
 

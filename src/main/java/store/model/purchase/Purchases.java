@@ -37,11 +37,11 @@ public class Purchases {
     private void validatePurchaseFormat(final String productInput) {
         if (!productInput.startsWith(PREFIX) || !productInput.endsWith(SUFFIX) || !productInput.contains(
                 PRODUCT_DELIMITER)) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_FORMAT);
+            throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_FORMAT.getFormatMessage());
         }
         int delimiterIndex = productInput.indexOf(PRODUCT_DELIMITER);
         if (productInput.indexOf(PRODUCT_DELIMITER, delimiterIndex + 1) != -1) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_FORMAT);
+            throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_FORMAT.getFormatMessage());
         }
     }
 
@@ -55,7 +55,7 @@ public class Purchases {
 
     private void validatePositiveNumber(final String countInput) {
         if (!countInput.matches(POSITIVE_INTEGER_REGEX) || countInput.equals("0")) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_FORMAT);
+            throw new IllegalArgumentException(ErrorMessage.INVALID_PURCHASE_FORMAT.getFormatMessage());
         }
     }
 

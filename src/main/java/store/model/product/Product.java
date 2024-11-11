@@ -28,7 +28,7 @@ public class Product {
 
     public void validatePurchaseAmount(final int purchaseAmount) {
         if (baseQuantity.getQuantity() + promotionQuantity.getQuantity() < purchaseAmount) {
-            throw new IllegalArgumentException(ErrorMessage.OUT_OF_STOCK);
+            throw new IllegalArgumentException(ErrorMessage.OUT_OF_STOCK.getFormatMessage());
         }
     }
 

@@ -27,7 +27,7 @@ class PurchasesTest {
     void 입력형식오류_테스트(String purchasesInput) {
         assertThatThrownBy(() -> new Purchases(purchasesInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.INVALID_PURCHASE_FORMAT);
+                .hasMessage(ErrorMessage.INVALID_PURCHASE_FORMAT.getFormatMessage());
     }
 
     @Test
@@ -35,7 +35,7 @@ class PurchasesTest {
         String purchasesInput = "[제로콜라-2]";
         assertThatThrownBy(() -> new Purchases(purchasesInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(ErrorMessage.PRODUCT_NOT_EXIST);
+                .hasMessage(ErrorMessage.PRODUCT_NOT_EXIST.getFormatMessage());
 
     }
 

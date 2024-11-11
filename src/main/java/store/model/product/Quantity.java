@@ -15,7 +15,7 @@ public class Quantity {
 
     public void subtract(int amount) {
         if (amount > quantity) {
-            throw new IllegalArgumentException(ErrorMessage.OUT_OF_STOCK);
+            throw new IllegalArgumentException(ErrorMessage.OUT_OF_STOCK.getFormatMessage());
         }
         quantity -= amount;
     }
