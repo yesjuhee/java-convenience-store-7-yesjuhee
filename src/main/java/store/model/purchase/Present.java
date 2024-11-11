@@ -1,14 +1,14 @@
 package store.model.purchase;
 
 import store.model.product.Product;
-import store.model.product.Products;
+import store.model.product.ProductDatabase;
 
 public class Present {
     private final Product product;
     private final int amount;
 
     public Present(Purchase purchase) {
-        this.product = Products.getProductByName(purchase.getProductName());
+        this.product = ProductDatabase.getProductByName(purchase.getProductName());
         this.amount = purchase.calculatePresentAmount();
     }
 

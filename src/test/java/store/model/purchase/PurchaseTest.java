@@ -7,14 +7,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import store.constant.Path;
 import store.model.product.Product;
-import store.model.product.Products;
+import store.model.product.ProductDatabase;
 import store.model.promotion.Promotions;
 
 class PurchaseTest {
     @BeforeEach
     void setUp() {
         Promotions.fetchPromotionsData(Path.PATH_TO_RESOURCES + "promotions.md");
-        Products.fetchProductsData(Path.PATH_TO_RESOURCES + "products.md");
+        ProductDatabase.fetchProductsFile(Path.PATH_TO_RESOURCES + "products.md");
     }
 
     @Test
@@ -26,7 +26,7 @@ class PurchaseTest {
         purchase.purchaseWithoutPromotion();
 
         // then
-        Product resultProduct = Products.getProductByName(purchase.getProductName());
+        Product resultProduct = ProductDatabase.getProductByName(purchase.getProductName());
         assertThat(resultProduct.getBaseQuantity()).isEqualTo(5);
     }
 }

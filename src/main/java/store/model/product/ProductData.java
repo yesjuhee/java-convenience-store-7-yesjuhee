@@ -24,8 +24,8 @@ public class ProductData {
         return name;
     }
 
-    public String getPrice() {
-        return price;
+    public int getPrice() {
+        return Integer.parseInt(price);
     }
 
     public String getQuantify() {

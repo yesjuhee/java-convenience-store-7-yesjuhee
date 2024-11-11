@@ -6,14 +6,14 @@ import store.model.promotion.Promotions;
 
 public class Product {
     private final String name;
-    private final Price price;
+    private final int price;
     private Quantity baseQuantity = new Quantity();
     private Quantity promotionQuantity = new Quantity();
     private Promotion promotion;
 
     public Product(final ProductData productData) {
         this.name = productData.getName();
-        this.price = new Price(productData.getPrice());
+        this.price = productData.getPrice();
         updateQuantity(productData);
     }
 
@@ -32,8 +32,8 @@ public class Product {
         }
     }
 
-    public boolean isInPromotion() {
-        return (hasPromotion() && promotion.inPeriod());
+    public boolean isNotInPromotion() {
+        return (!hasPromotion() || !promotion.inPeriod());
     }
 
     public boolean hasPromotion() {
@@ -65,7 +65,7 @@ public class Product {
     }
 
     public int getPrice() {
-        return price.getPrice();
+        return price;
     }
 
     public int getBaseQuantity() {
@@ -83,5 +83,4 @@ public class Product {
     public int getPromotionUnit() {
         return promotion.getPromotionUnit();
     }
-
 }
