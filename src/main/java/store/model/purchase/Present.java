@@ -7,7 +7,7 @@ public class Present {
     private final Product product;
     private final int amount;
 
-    public Present(Purchase purchase) {
+    public Present(final Purchase purchase) {
         this.product = ProductDatabase.getProductByName(purchase.getProductName());
         this.amount = purchase.calculatePresentAmount();
     }

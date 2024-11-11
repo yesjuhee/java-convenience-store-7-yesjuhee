@@ -7,14 +7,14 @@ public class Presents {
     private final List<Present> presents = new ArrayList<>();
 
     public int calculatePromotionDiscount() {
-        return presents.stream().mapToInt((present) -> present.getTotalPresentPrice()).sum();
-    }
-
-    public List<Present> getPresents() {
-        return presents;
+        return presents.stream().mapToInt(Present::getTotalPresentPrice).sum();
     }
 
     public void addPresent(Purchase purchase) {
         presents.add(new Present(purchase));
+    }
+
+    public List<Present> getPresents() {
+        return presents;
     }
 }
