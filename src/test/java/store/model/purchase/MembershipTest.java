@@ -16,9 +16,9 @@ class MembershipTest {
     }
 
     @Test
-    void 기본생성자는_0원을_설정한다() {
+    void 멤버십혜택이없는경우_0원을_설정한다() {
         // given & when
-        Membership membership = new Membership();
+        Membership membership = Membership.notApplied();
         // then
         assertThat(membership.getDiscount()).isEqualTo(0);
     }
@@ -29,7 +29,7 @@ class MembershipTest {
         Purchases purchases = new Purchases("[물-10]");
 
         // when
-        Membership membership = new Membership(purchases);
+        Membership membership = Membership.of(purchases);
 
         // then
         assertThat(membership.getDiscount()).isEqualTo(1500);
@@ -41,7 +41,7 @@ class MembershipTest {
         Purchases purchases = new Purchases("[물-10],[에너지바-5],[비타민워터-6],[정식도시락-8]");
 
         // when
-        Membership membership = new Membership(purchases);
+        Membership membership = Membership.of(purchases);
 
         // then
         assertThat(membership.getDiscount()).isEqualTo(8000);
