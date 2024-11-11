@@ -41,9 +41,6 @@ public class ConfirmView {
     }
 
     private boolean parseReply(final String replyInput) {
-        if (replyInput.matches(YES_REGEX)) {
-            return true;
-        }
-        return false;
+        return replyInput.matches(YES_REGEX);
     }
 }
