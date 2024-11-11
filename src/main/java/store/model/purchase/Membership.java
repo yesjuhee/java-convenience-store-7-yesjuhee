@@ -5,24 +5,29 @@ public class Membership {
     private static final int MAXIMUM_DISCOUNT = 8000;
     private final int discount;
 
-    public Membership(final Purchases purchases) {
-        int priceWithoutDiscount = calculatePriceWithoutDiscount(purchases);
-        discount = membershipDiscount(priceWithoutDiscount);
+    private Membership(int discount) {
+        this.discount = discount;
     }
 
-    public Membership() {
-        this.discount = 0;
+    public static Membership of(final Purchases purchases) {
+        int priceWithoutPromotion = calculatePriceWithoutPromotion(purchases);
+        int discount = calculateMembershipDiscount(priceWithoutPromotion);
+        return new Membership(discount);
     }
 
-    private int membershipDiscount(final int price) {
-        int discountPrice = (int) (price * DISCOUNT_PERCENTAGE);
-        return Math.min(discountPrice, MAXIMUM_DISCOUNT);
+    public static Membership notApplied() {
+        return new Membership(0);
     }
 
-    private int calculatePriceWithoutDiscount(final Purchases purchases) {
+    private static int calculatePriceWithoutPromotion(final Purchases purchases) {
         int totalPrice = purchases.calculateTotalPrice();
         int promotionPrice = purchases.calculatePromotionPrice();
         return totalPrice - promotionPrice;
+    }
+
+    private static int calculateMembershipDiscount(final int price) {
+        int discountPrice = (int) (price * DISCOUNT_PERCENTAGE);
+        return Math.min(discountPrice, MAXIMUM_DISCOUNT);
     }
 
     public int getDiscount() {

@@ -7,8 +7,8 @@ public class MembershipController extends StoreController {
     public Membership confirmToApplyMembership(Purchases purchases) {
         boolean applyMembership = retryUntilSuccess(confirmView::confirmToApplyMembership);
         if (applyMembership) {
-            return new Membership(purchases);
+            return Membership.of(purchases);
         }
-        return new Membership();
+        return Membership.notApplied();
     }
 }
