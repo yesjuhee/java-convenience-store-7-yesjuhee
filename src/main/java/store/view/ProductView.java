@@ -10,32 +10,49 @@ public class ProductView {
 
     public void displayProducts(final List<Product> products) {
         System.out.printf(OutputMessage.WELCOME.getFormatMessage());
-        products.forEach(this::displayProduct);
+        for (Product product : products) {
+            if (product.hasPromotion()) {
+                displayPromotionProduct(product, product.getPromotion());
+            }
+            displayProduct(product);
+        }
     }
 
     private void displayProduct(final Product product) {
-        if (product.hasPromotion()) {
-            displayPromotionProduct(product);
-        }
-        if (product.getBaseQuantity() == OUT_OF_STOCK) {
-            System.out.printf(
-                    OutputMessage.PRODUCT_OUT_OF_STOCK.getFormatMessage(product.getName(), product.getPrice()));
+        int baseQuantity = product.getBaseQuantity();
+        if (baseQuantity == OUT_OF_STOCK) {
+            displayOutOfStockProduct(product);
             return;
         }
-        System.out.printf(OutputMessage.PRODUCT.getFormatMessage(product.getName(), product.getPrice(),
-                product.getBaseQuantity()));
+        String name = product.getName();
+        int price = product.getPrice();
+        System.out.printf(OutputMessage.PRODUCT.getFormatMessage(name, price, baseQuantity));
     }
 
-    private void displayPromotionProduct(final Product product) {
-        Promotion promotion = product.getPromotion();
-        if (product.getPromotionQuantity() == OUT_OF_STOCK) {
-            System.out.printf(OutputMessage.PROMOTION_PRODUCT_OUT_OF_STOCK.getFormatMessage(product.getName(),
-                    product.getPrice(),
-                    promotion.getName()));
+    private void displayPromotionProduct(final Product product, final Promotion promotion) {
+        int promotionQuantity = product.getPromotionQuantity();
+        if (promotionQuantity == OUT_OF_STOCK) {
+            displayOutOfStockPromotionProduct(product, promotion);
             return;
         }
-        System.out.printf(OutputMessage.PROMOTION_PRODUCT.getFormatMessage(product.getName(), product.getPrice(),
-                product.getPromotionQuantity(),
-                promotion.getName()));
+        String name = product.getName();
+        int price = product.getPrice();
+        String promotionName = promotion.getName();
+        System.out.printf(
+                OutputMessage.PROMOTION_PRODUCT.getFormatMessage(name, price, promotionQuantity, promotionName));
+    }
+
+    private void displayOutOfStockProduct(final Product product) {
+        String name = product.getName();
+        int price = product.getPrice();
+        System.out.printf(
+                OutputMessage.PRODUCT_OUT_OF_STOCK.getFormatMessage(name, price));
+    }
+
+    private void displayOutOfStockPromotionProduct(final Product product, final Promotion promotion) {
+        String name = product.getName();
+        int price = product.getPrice();
+        String promotionName = promotion.getName();
+        System.out.printf(OutputMessage.PROMOTION_PRODUCT_OUT_OF_STOCK.getFormatMessage(name, price, promotionName));
     }
 }
