@@ -30,7 +30,7 @@ public class PromotionController extends StoreController {
             confirmPurchaseAll(purchase);
             return;
         }
-        if (purchase.canGetMoreFreeProduct() && purchase.purchaseAmountLessThanPromotionQuantity()) {
+        if (purchase.canGetMoreFreeProduct()) {
             confirmGetMoreFreeProduct(purchase);
         }
     }

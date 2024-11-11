@@ -37,12 +37,11 @@ public class Purchase {
     }
 
     public boolean canGetMoreFreeProduct() {
+        if (amount >= product.getPromotionQuantity()) {
+            return false;
+        }
         Promotion promotion = product.getPromotion();
         return promotion.canGetMoreFreeProduct(amount);
-    }
-
-    public boolean purchaseAmountLessThanPromotionQuantity() {
-        return amount < product.getPromotionQuantity();
     }
 
     public int calculateAmountWithoutPromotion() {
